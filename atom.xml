@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wind-uncovered.github.io</id>
     <title>Belgrade&apos;s blog</title>
-    <updated>2020-04-02T17:29:55.030Z</updated>
+    <updated>2020-04-02T17:31:07.787Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wind-uncovered.github.io"/>
     <link rel="self" href="https://wind-uncovered.github.io/atom.xml"/>
@@ -16,8 +16,7 @@
         <link href="https://wind-uncovered.github.io/post/python-xue-xi-bi-ji-fan-wai-shen-kao-bei-he-qian-fu-zhi/">
         </link>
         <updated>2020-04-02T17:26:49.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="shallow-copy-deep-copy">shallow copy &amp; deep copy</h2>
-<h3 id="创建一个列表">创建一个列表</h3>
+        <content type="html"><![CDATA[<h3 id="创建一个列表">创建一个列表</h3>
 <pre><code class="language-python">lst2 = ['001','2019-11-11',['三文鱼','电烤箱']]
 </code></pre>
 <p>这个列表的结构示意图如下:<br>
@@ -299,6 +298,54 @@ print(pat.fullmatch('asd_211223sad'),
 # 所用的类都继承object类，使用__dir__可查看
 
 </code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[python学习笔记(1)] python 两大特性和四种基本语法]]></title>
+        <id>https://wind-uncovered.github.io/post/python-bi-ji-1-python-liang-da-te-xing-he-si-chong-ji-ben-yu-fa/</id>
+        <link href="https://wind-uncovered.github.io/post/python-bi-ji-1-python-liang-da-te-xing-he-si-chong-ji-ben-yu-fa/">
+        </link>
+        <updated>2020-04-02T16:36:10.000Z</updated>
+        <content type="html"><![CDATA[<p>什么是强类型语言？什么事类型检查？语言的动态静态又是什么？</p>
+<hr>
+<p>[TOC]</p>
+<hr>
+<h3 id="什么是动态语言">什么是动态语言</h3>
+<blockquote>
+<p>了解动态语言，或者是静态语言，需要了解类型检查</p>
+</blockquote>
+<p>类型检查是验证类型约束的过程，编译器或解释器在编译阶段或运行阶段进行类型检查。其具体过程就是，通过变量的类型，判断它们在表达式中是否合理，即有无语法错误。</p>
+<blockquote>
+<p>类型检查发生在程序运行阶段，则称为动态类型语言</p>
+<p>类型检查发生在程序编译阶段，则称为静态类型语言</p>
+</blockquote>
+<p>由于类型检查发生在编译阶段时，引用的类型已经确定，之后再改动就会发生错误，因此有了动态静态之分。</p>
+<h3 id="什么是强类型语言">什么是强类型语言</h3>
+<blockquote>
+<p>不同类型变量混合计算的，叫做强类型语言</p>
+<p>不同类型变量能混合运算的，叫做弱类型语言</p>
+</blockquote>
+<p>在Ｃ++中，字母可以按照ASCII映射为数字，因此两者可以混合计算，C++因此是弱类型语言。</p>
+<h3 id="四种基本语法">四种基本语法</h3>
+<p>python的基本语法以变量命名原则、缩进原则、特殊关键字原则和特殊运算符原则进行分类。</p>
+<h4 id="命名规则">命名规则</h4>
+<ul>
+<li>不允许以数字开头，允许英文，数字和下划线</li>
+<li>区分大小写</li>
+<li>以下划线开头的变量有特殊含义：_代表不能直接被访问，__代表为类的私有成员，不能被导入和其他类变量访问</li>
+<li>__xx__是特殊方法</li>
+<li>一般变量命名使用下划线分割单词，不使用大小写</li>
+<li>类名采用驼峰命名法</li>
+<li>函数名使用首字母小写的驼峰命名</li>
+<li>类方法名使用小写，下划线分割单词</li>
+<li>特殊变量全部大写</li>
+</ul>
+<h4 id="缩进原则">缩进原则</h4>
+<blockquote>
+<p>代码的缩进代表四个空格，表达了代码的逻辑层次</p>
+</blockquote>
+<h3 id="特殊关键字原则">特殊关键字原则</h3>
+<h3 id="特殊运算符">特殊运算符</h3>
 ]]></content>
     </entry>
 </feed>
