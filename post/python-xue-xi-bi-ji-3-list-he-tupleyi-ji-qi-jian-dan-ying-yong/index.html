@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>[python学习笔记(3)]  list和tuple，以及其简单应用 | Belgrade&#39;s blog</title>
+<meta name="description" content="初创时期，会记录下多少东西呢？">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://wind-uncovered.github.io/favicon.ico?v=1585848591214">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://wind-uncovered.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://wind-uncovered.github.io">
+        <img class="avatar" src="https://wind-uncovered.github.io/images/avatar.png?v=1585848591214" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://wind-uncovered.github.io">
+        <h1 class="site-title">Belgrade&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://wind-uncovered.github.io/post-images/python-xue-xi-bi-ji-3-list-he-tupleyi-ji-qi-jian-dan-ying-yong.png')">
+            </div>
+          
+          <h2 class="post-title">[python学习笔记(3)]  list和tuple，以及其简单应用</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-04-03</span>
+            
+          </div>
+          <div class="post-content">
+            <h3 id="list">list</h3>
+<ul>
+<li>list 是可增删的可变容器，其内部元素的类型不要求一致，可以进行嵌套</li>
+</ul>
+<h4 id="基本操作">基本操作</h4>
+<ul>
+<li>创建列表</li>
+</ul>
+<pre><code class="language-python">empty = []
+lst = [1,'xiaoming',29.5,'17312662388']
+lst2 = ['001','2019-11-11',['三文鱼','电烤箱']]
+</code></pre>
+<p><img src="https://wind-uncovered.github.io/post-images/1585848365906.png" alt="" loading="lazy"><br>
+<img src="https://wind-uncovered.github.io/post-images/1585848371179.png" alt="" loading="lazy"><br>
+<img src="https://wind-uncovered.github.io/post-images/1585848375864.png" alt="" loading="lazy"></p>
+<ul>
+<li>通过内置函数进行管理</li>
+</ul>
+<pre><code class="language-python">empty = []
+lst = [1,'xiaoming',29.5,'17312662388']
+lst2 = ['001','2019-11-11',['三文鱼','电烤箱']]
+
+len(empty) # 0
+len(lst) # 4
+len(lst2) # 3
+
+sku= lst[2]#通过索引取出对象
+sku.append('烤鸭')
+sku.pop()#弹出一个元素，返回被弹出的元素
+sku.remove(value)#删除指定元素，无返回
+
+print(lst2)
+&gt;&gt;&gt;['001', '2019-11-11', ['牛腱子', '电烤箱']]
+
+#上面的输出表面sku被改动的同时lst2也被改动了
+# 通过复制可以不改动
+sku_deep=lst2[2].copy()
+
+</code></pre>
+<h4 id="深浅拷贝">深浅拷贝</h4>
+<p>关于拷贝另开了一篇文章</p>
+<h4 id="切片">切片</h4>
+<pre><code class="language-python">a=list(range(1,20,3))
+
+&gt;&gt;&gt; a
+&gt;&gt;&gt; [1, 4, 7, 10, 13, 16, 19]
+</code></pre>
+<ul>
+<li>使用 a[-1] 获取 a 的最后一个元素，返回 int 型，值为 19；</li>
+<li>使用 a[:-1] 获取除最后一个元素的切片 [1, 4, 7, 10, 13, 16]；</li>
+<li>使用 a[1:5] 生成索引为 [1,5)（不包括索引 5）的切片 [4, 7, 10, 13]；</li>
+<li>使用 a[1:5:2] 生成索引 [1,5) 但步长为 2 的切片 [4,10]；</li>
+<li>使用 a[::3] 生成索引 [0,len(a)) 步长为 3 的切片 [1,10,19]；</li>
+<li>使用 a[::-3] 生成逆向索引 [len(a),0) 步长为 3 的切片 [19,10,1]</li>
+</ul>
+<p>使用列表的逆向切片，只需要一行代码</p>
+<pre><code class="language-python">def reverse(lst):
+    return lst[::-1]
+</code></pre>
+<pre><code class="language-python">ra=reverse(a)
+
+&gt;&gt;&gt;ra
+&gt;&gt;&gt;[19, 16, 13, 10, 7, 4, 1]
+</code></pre>
+<hr>
+<h3 id="tuple">tuple</h3>
+<h4 id="基本操作-2">基本操作</h4>
+<p>元组是一种不可变对象，不能增加和删除元素</p>
+<ul>
+<li>创建元组</li>
+</ul>
+<pre><code class="language-python">a = () # 空元组对象
+b = (1,'xiaoming',29.5,'17312662388')
+c = ('001','2019-11-11',['三文鱼','电烤箱'])
+</code></pre>
+<p>在切片上，元组的性质和list一致，要注意的第一点是，单元素的元组创建必须加上逗号，否则会被视为对象本身</p>
+<pre><code class="language-python">class Dog():
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+        
+meme=Dog('mimi',12)
+
+lst=(meme)
+lst2=(meme,)
+
+&gt;&gt;&gt;type(lst)
+&gt;&gt;&gt;&lt;class '__main__.Dog'&gt;
+&gt;&gt;&gt;type(lst2)
+&gt;&gt;&gt;&lt;class 'tuple'&gt;
+</code></pre>
+<ul>
+<li>统计方法</li>
+</ul>
+<pre><code class="language-python">from numpy import random
+
+a = random.randint(1,5,10) # 从 [1,5) 区间内随机选择 10 个数
+at = tuple(a) # 转 tuple：(1, 4, 2, 1, 3, 3, 2, 3, 4, 2)
+at.count(3) # 统计 3 出现次数，恰好也为 3 次
+</code></pre>
+<p>count这个方法对于list也是成立的</p>
+<h4 id="可变对象和不可变对象的本质">可变对象和不可变对象的本质</h4>
+<p>不可变对象的本质在于其长度在创建后就确定了，因此不能增加也不能删除。</p>
+<p>在嵌套了列表的元组中，被嵌套列表不能被转发引用</p>
+<pre><code class="language-python">test=(1,2,[3,4],5,6)
+
+sku=test[2]
+&gt;&gt;&gt;TypeError: 'tuple' object is not callable
+</code></pre>
+<p>但是其元素的元素可以被直接修改</p>
+<pre><code class="language-python">test[2].append('boom')
+
+test[2]
+&gt;&gt;&gt;[3,4,'boom']
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://wind-uncovered.github.io/post/python-xue-xi-bi-ji-2-python-si-da-shu-ju-lei-xing-zong-jie/">
+              <h3 class="post-title">
+                下一篇：[python学习笔记(2)] python 四大数据类型总结
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">初创时期，会记录下多少东西呢？</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://wind-uncovered.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

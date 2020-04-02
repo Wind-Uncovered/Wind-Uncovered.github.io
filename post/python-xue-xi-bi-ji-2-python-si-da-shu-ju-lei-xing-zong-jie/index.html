@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>[python学习笔记(2)] python 四大数据类型总结 | Belgrade&#39;s blog</title>
+<meta name="description" content="初创时期，会记录下多少东西呢？">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://wind-uncovered.github.io/favicon.ico?v=1585848591214">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://wind-uncovered.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://wind-uncovered.github.io">
+        <img class="avatar" src="https://wind-uncovered.github.io/images/avatar.png?v=1585848591214" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://wind-uncovered.github.io">
+        <h1 class="site-title">Belgrade&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://wind-uncovered.github.io/post-images/python-xue-xi-bi-ji-2-python-si-da-shu-ju-lei-xing-zong-jie.png')">
+            </div>
+          
+          <h2 class="post-title">[python学习笔记(2)] python 四大数据类型总结</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-04-03</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://wind-uncovered.github.io/tag/GMdmZJTua/">
+                    python
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <!-- more -->
+<h3 id="数值型">数值型</h3>
+<p>数值型是python中最基本的数据类型，一般有int,float和bool三种类型，这些类型都是单元素的。</p>
+<blockquote>
+<p>前缀加上０x可以创建十六进制整数</p>
+<p>e可以通过科学计数法表示浮点数，如1.05e3=1050.0</p>
+</blockquote>
+<h3 id="容器型">容器型</h3>
+<p>容器型是可容纳多个元素的对象，比如list, tumple, dict, set这四种类型。这些类型是python内置类型。</p>
+<blockquote>
+<p>字典是一种哈希表，通过查询值隐射另一个值</p>
+</blockquote>
+<p>###　字符串型</p>
+<p>python3中所有字符串类型被同一判定为shr对象，不论变量引用的都是单个字母还是一串字符串。</p>
+<p>关于字符串有5个高频用法。</p>
+<pre><code class="language-python">#strip 去除字符串前后的多余空格
+&gt;&gt;&gt; '  I love python\t\n  '.strip()
+&gt;&gt;&gt; 'I love python'
+
+#replace 替换字符串
+&gt;&gt;&gt; 'i love python'.replace(' ','_')
+&gt;&gt;&gt; 'i_love_python'
+
+#join 合并字符串
+&gt;&gt;&gt; '_'.join(['book','stour','count'])
+&gt;&gt;&gt; 'book_store_count'
+
+#title 首字母大写
+&gt;&gt;&gt; 'abc alice'.title()
+&gt;&gt;&gt; 'Abc Alice'
+
+#find 返回匹配字符串的起始索引
+&gt;&gt;&gt; 'i love python'.find('python')
+&gt;&gt;&gt; 7
+#p是第八个字符，所以索引位置是7，所有字符串一律被认为是列表，但列表不能被认为是字符串
+</code></pre>
+<h4 id="具体应用判断字符串str1是否由str2旋转获得">具体应用：判断字符串str1是否由str2旋转获得</h4>
+<pre><code class="language-python">def is_rotation(s1: str, s2: str) -&gt; bool:
+    if s1 is None or s2 is None:
+        return False
+    if len(s1) != len(s2):
+        return False
+
+    def is_substring(s1: str, s2: str) -&gt; bool:
+        return s1 in s2
+    return is_substring(s1, s2 + s2)
+</code></pre>
+<h4 id="具体应用简单正则表达式">具体应用：简单正则表达式</h4>
+<p>python的re模块提供了正则表达式检查功能，以下案例实现了密码检查</p>
+<ul>
+<li>密码要求6到20位</li>
+<li>只包含英文字母和数字</li>
+</ul>
+<pre><code class="language-python">import re
+
+pat = re.compile(r'[\da-zA-Z]{6,20}')
+
+print(pat.fullmatch('asd_211223sad'),
+      		pat.fullmatch('qw12'),
+			pat.fullmatch('adsfa12dqd12121def1fee'),
+      		pat.fullmatch('n0password'))
+
+&gt;&gt;&gt; None, None, None, &lt;_sre.SRE_Match object; span=(0, 10), match='n0password'&gt;
+</code></pre>
+<h3 id="自定义类">自定义类</h3>
+<p>python中使用关键字class定制类，self表示类实例对象本身</p>
+<pre><code class="language-python">class Dog(object):
+    pass
+# 所用的类都继承object类，使用__dir__可查看
+
+</code></pre>
+
+          </div>
+        </div>
+
+        
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">初创时期，会记录下多少东西呢？</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://wind-uncovered.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

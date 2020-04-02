@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wind-uncovered.github.io</id>
     <title>Belgrade&apos;s blog</title>
-    <updated>2020-04-02T17:17:02.185Z</updated>
+    <updated>2020-04-02T17:29:55.030Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wind-uncovered.github.io"/>
     <link rel="self" href="https://wind-uncovered.github.io/atom.xml"/>
@@ -11,50 +11,294 @@
     <icon>https://wind-uncovered.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Belgrade&apos;s blog</rights>
     <entry>
-        <title type="html"><![CDATA[[python笔记(1)] python 两大特性和四种基本语法]]></title>
-        <id>https://wind-uncovered.github.io/post/python-bi-ji-1-python-liang-da-te-xing-he-si-chong-ji-ben-yu-fa/</id>
-        <link href="https://wind-uncovered.github.io/post/python-bi-ji-1-python-liang-da-te-xing-he-si-chong-ji-ben-yu-fa/">
+        <title type="html"><![CDATA[[python学习笔记(番外)] 深拷贝和浅复制]]></title>
+        <id>https://wind-uncovered.github.io/post/python-xue-xi-bi-ji-fan-wai-shen-kao-bei-he-qian-fu-zhi/</id>
+        <link href="https://wind-uncovered.github.io/post/python-xue-xi-bi-ji-fan-wai-shen-kao-bei-he-qian-fu-zhi/">
         </link>
-        <updated>2020-04-02T16:36:10.000Z</updated>
-        <content type="html"><![CDATA[<hr>
-<p>[TOC]</p>
-<hr>
-<h3 id="什么是动态语言">什么是动态语言</h3>
-<blockquote>
-<p>了解动态语言，或者是静态语言，需要了解类型检查</p>
-</blockquote>
-<p>类型检查是验证类型约束的过程，编译器或解释器在编译阶段或运行阶段进行类型检查。其具体过程就是，通过变量的类型，判断它们在表达式中是否合理，即有无语法错误。</p>
-<blockquote>
-<p>类型检查发生在程序运行阶段，则称为动态类型语言</p>
-<p>类型检查发生在程序编译阶段，则称为静态类型语言</p>
-</blockquote>
-<p>由于类型检查发生在编译阶段时，引用的类型已经确定，之后再改动就会发生错误，因此有了动态静态之分。</p>
-<h3 id="什么是强类型语言">什么是强类型语言</h3>
-<blockquote>
-<p>不同类型变量混合计算的，叫做强类型语言</p>
-<p>不同类型变量能混合运算的，叫做弱类型语言</p>
-</blockquote>
-<p>在Ｃ++中，字母可以按照ASCII映射为数字，因此两者可以混合计算，C++因此是弱类型语言。</p>
-<h3 id="四种基本语法">四种基本语法</h3>
-<p>python的基本语法以变量命名原则、缩进原则、特殊关键字原则和特殊运算符原则进行分类。</p>
-<h4 id="命名规则">命名规则</h4>
+        <updated>2020-04-02T17:26:49.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="shallow-copy-deep-copy">shallow copy &amp; deep copy</h2>
+<h3 id="创建一个列表">创建一个列表</h3>
+<pre><code class="language-python">lst2 = ['001','2019-11-11',['三文鱼','电烤箱']]
+</code></pre>
+<p>这个列表的结构示意图如下:<br>
+<img src="https://wind-uncovered.github.io/post-images/1585848472399.png" alt="" loading="lazy"></p>
+<h3 id="引用取出">引用取出</h3>
+<pre><code class="language-python">sku=lst2[2]
+print(sku)
+&gt;&gt;&gt;['三文鱼','电烤箱']
+</code></pre>
+<p>此时其结构如下:<br>
+<img src="https://wind-uncovered.github.io/post-images/1585848482980.png" alt="" loading="lazy"></p>
+<p>如果我们对sku进行操作，lst2中的内容也会发生改变</p>
+<pre><code class="language-python">sku.append('烤鸭')
+sku.insert(1,'牛腱子')
+
+sku,lst2
+&gt;&gt;&gt;['三文鱼','牛腱子','电烤箱','烤鸭']
+&gt;&gt;&gt;['001', '2019-11-11', ['三文鱼', '牛腱子', '电烤箱', '烤鸭']]
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://wind-uncovered.github.io/post-images/1585848491914.png" alt="" loading="lazy"></figure>
+<pre><code class="language-python">item=sku.pop()
+sku.remove('三文鱼')
+
+sku
+&gt;&gt;&gt; ['牛腱子','电烤箱']
+lst2
+&gt;&gt;&gt;['001', '2019-11-11', ['牛腱子', '电烤箱']]
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://wind-uncovered.github.io/post-images/1585848501360.png" alt="" loading="lazy"></figure>
+<p>以上展示了引用取出的效果。</p>
+<p>为了避免更改复制内容是同时操作原内容，有两种拷贝方式，分别是内置的copy方法和标准库copy模块中的deepcopy函数。copy被称为shallow copy(浅拷贝), deepcopy被称为深拷贝。其具体情况展示如下:</p>
+<h3 id="浅拷贝">浅拷贝</h3>
+<pre><code class="language-python">lst2 = ['001','2019-11-11',['三文鱼','电烤箱']]
+
+sku_deep = lst2[2].copy()
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://wind-uncovered.github.io/post-images/1585848511224.png" alt="" loading="lazy"></figure>
+<pre><code class="language-python">sku_deep.pop()
+&gt;&gt;&gt;sku_deep
+&gt;&gt;&gt;['三文鱼']
+&gt;&gt;&gt;lst2[2]
+&gt;&gt;&gt;['三文鱼','电烤箱']
+</code></pre>
+<p>结构示意图表名，sku_deep和lst2的元素不在同一结构中，因此互相之间不会造成干扰。</p>
+<p>但是copy被叫做浅拷贝是有原因的，见下:</p>
+<pre><code class="language-python">a = [1, 2, [3, 4, 5]]
+ac = a.copy()
+ac[0] = 10
+ac[2][1] = 40
+
+&gt;&gt;&gt;a[0] == ac[0]
+&gt;&gt;&gt;False#说明浅拷贝成功
+&gt;&gt;&gt;a[2][1] == ac[2][1]
+&gt;&gt;&gt;True#这里再次关联了
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://wind-uncovered.github.io/post-images/1585848517430.png" alt="" loading="lazy"></figure>
+<p>通过结构示意图，我们可以看到ac[2]和a[2]其实是关联的，因为copy在复制的时候，由于a[2]是一个嵌套，结果复制的是id(a[2])</p>
+<h3 id="深拷贝">深拷贝</h3>
+<pre><code class="language-python">from copy import deepcopy
+
+a = [1,2,[3,4,5]]
+ac = deepcopy(a)
+ac[0] = 10
+ac[2][1] = 40
+print(a[0] == ac[0])
+&gt;&gt;&gt; False
+print(a[2][1] == ac[2][1])
+&gt;&gt;&gt; False
+</code></pre>
+<p>这一次复制的结果都是False，说明a和ac指向了不同的内存区域。</p>
+<p>查询id:</p>
+<pre><code class="language-python">id(ac[2])
+&gt;&gt;&gt;140647444908744
+id(a[2])
+&gt;&gt;&gt;140647444907528
+</code></pre>
+<p>结构:</p>
+<figure data-type="image" tabindex="5"><img src="https://wind-uncovered.github.io/post-images/1585848524713.png" alt="" loading="lazy"></figure>
+<p>由此可以看出深拷贝的本质</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[python学习笔记(3)]  list和tuple，以及其简单应用]]></title>
+        <id>https://wind-uncovered.github.io/post/python-xue-xi-bi-ji-3-list-he-tupleyi-ji-qi-jian-dan-ying-yong/</id>
+        <link href="https://wind-uncovered.github.io/post/python-xue-xi-bi-ji-3-list-he-tupleyi-ji-qi-jian-dan-ying-yong/">
+        </link>
+        <updated>2020-04-02T17:22:40.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="list">list</h3>
 <ul>
-<li>不允许以数字开头，允许英文，数字和下划线</li>
-<li>区分大小写</li>
-<li>以下划线开头的变量有特殊含义：_代表不能直接被访问，__代表为类的私有成员，不能被导入和其他类变量访问</li>
-<li>__xx__是特殊方法</li>
-<li>一般变量命名使用下划线分割单词，不使用大小写</li>
-<li>类名采用驼峰命名法</li>
-<li>函数名使用首字母小写的驼峰命名</li>
-<li>类方法名使用小写，下划线分割单词</li>
-<li>特殊变量全部大写</li>
+<li>list 是可增删的可变容器，其内部元素的类型不要求一致，可以进行嵌套</li>
 </ul>
-<h4 id="缩进原则">缩进原则</h4>
+<h4 id="基本操作">基本操作</h4>
+<ul>
+<li>创建列表</li>
+</ul>
+<pre><code class="language-python">empty = []
+lst = [1,'xiaoming',29.5,'17312662388']
+lst2 = ['001','2019-11-11',['三文鱼','电烤箱']]
+</code></pre>
+<p><img src="https://wind-uncovered.github.io/post-images/1585848365906.png" alt="" loading="lazy"><br>
+<img src="https://wind-uncovered.github.io/post-images/1585848371179.png" alt="" loading="lazy"><br>
+<img src="https://wind-uncovered.github.io/post-images/1585848375864.png" alt="" loading="lazy"></p>
+<ul>
+<li>通过内置函数进行管理</li>
+</ul>
+<pre><code class="language-python">empty = []
+lst = [1,'xiaoming',29.5,'17312662388']
+lst2 = ['001','2019-11-11',['三文鱼','电烤箱']]
+
+len(empty) # 0
+len(lst) # 4
+len(lst2) # 3
+
+sku= lst[2]#通过索引取出对象
+sku.append('烤鸭')
+sku.pop()#弹出一个元素，返回被弹出的元素
+sku.remove(value)#删除指定元素，无返回
+
+print(lst2)
+&gt;&gt;&gt;['001', '2019-11-11', ['牛腱子', '电烤箱']]
+
+#上面的输出表面sku被改动的同时lst2也被改动了
+# 通过复制可以不改动
+sku_deep=lst2[2].copy()
+
+</code></pre>
+<h4 id="深浅拷贝">深浅拷贝</h4>
+<p>关于拷贝另开了一篇文章</p>
+<h4 id="切片">切片</h4>
+<pre><code class="language-python">a=list(range(1,20,3))
+
+&gt;&gt;&gt; a
+&gt;&gt;&gt; [1, 4, 7, 10, 13, 16, 19]
+</code></pre>
+<ul>
+<li>使用 a[-1] 获取 a 的最后一个元素，返回 int 型，值为 19；</li>
+<li>使用 a[:-1] 获取除最后一个元素的切片 [1, 4, 7, 10, 13, 16]；</li>
+<li>使用 a[1:5] 生成索引为 [1,5)（不包括索引 5）的切片 [4, 7, 10, 13]；</li>
+<li>使用 a[1:5:2] 生成索引 [1,5) 但步长为 2 的切片 [4,10]；</li>
+<li>使用 a[::3] 生成索引 [0,len(a)) 步长为 3 的切片 [1,10,19]；</li>
+<li>使用 a[::-3] 生成逆向索引 [len(a),0) 步长为 3 的切片 [19,10,1]</li>
+</ul>
+<p>使用列表的逆向切片，只需要一行代码</p>
+<pre><code class="language-python">def reverse(lst):
+    return lst[::-1]
+</code></pre>
+<pre><code class="language-python">ra=reverse(a)
+
+&gt;&gt;&gt;ra
+&gt;&gt;&gt;[19, 16, 13, 10, 7, 4, 1]
+</code></pre>
+<hr>
+<h3 id="tuple">tuple</h3>
+<h4 id="基本操作-2">基本操作</h4>
+<p>元组是一种不可变对象，不能增加和删除元素</p>
+<ul>
+<li>创建元组</li>
+</ul>
+<pre><code class="language-python">a = () # 空元组对象
+b = (1,'xiaoming',29.5,'17312662388')
+c = ('001','2019-11-11',['三文鱼','电烤箱'])
+</code></pre>
+<p>在切片上，元组的性质和list一致，要注意的第一点是，单元素的元组创建必须加上逗号，否则会被视为对象本身</p>
+<pre><code class="language-python">class Dog():
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+        
+meme=Dog('mimi',12)
+
+lst=(meme)
+lst2=(meme,)
+
+&gt;&gt;&gt;type(lst)
+&gt;&gt;&gt;&lt;class '__main__.Dog'&gt;
+&gt;&gt;&gt;type(lst2)
+&gt;&gt;&gt;&lt;class 'tuple'&gt;
+</code></pre>
+<ul>
+<li>统计方法</li>
+</ul>
+<pre><code class="language-python">from numpy import random
+
+a = random.randint(1,5,10) # 从 [1,5) 区间内随机选择 10 个数
+at = tuple(a) # 转 tuple：(1, 4, 2, 1, 3, 3, 2, 3, 4, 2)
+at.count(3) # 统计 3 出现次数，恰好也为 3 次
+</code></pre>
+<p>count这个方法对于list也是成立的</p>
+<h4 id="可变对象和不可变对象的本质">可变对象和不可变对象的本质</h4>
+<p>不可变对象的本质在于其长度在创建后就确定了，因此不能增加也不能删除。</p>
+<p>在嵌套了列表的元组中，被嵌套列表不能被转发引用</p>
+<pre><code class="language-python">test=(1,2,[3,4],5,6)
+
+sku=test[2]
+&gt;&gt;&gt;TypeError: 'tuple' object is not callable
+</code></pre>
+<p>但是其元素的元素可以被直接修改</p>
+<pre><code class="language-python">test[2].append('boom')
+
+test[2]
+&gt;&gt;&gt;[3,4,'boom']
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[python学习笔记(2)] python 四大数据类型总结]]></title>
+        <id>https://wind-uncovered.github.io/post/python-xue-xi-bi-ji-2-python-si-da-shu-ju-lei-xing-zong-jie/</id>
+        <link href="https://wind-uncovered.github.io/post/python-xue-xi-bi-ji-2-python-si-da-shu-ju-lei-xing-zong-jie/">
+        </link>
+        <updated>2020-04-02T17:19:34.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<h3 id="数值型">数值型</h3>
+<p>数值型是python中最基本的数据类型，一般有int,float和bool三种类型，这些类型都是单元素的。</p>
 <blockquote>
-<p>代码的缩进代表四个空格，表达了代码的逻辑层次</p>
+<p>前缀加上０x可以创建十六进制整数</p>
+<p>e可以通过科学计数法表示浮点数，如1.05e3=1050.0</p>
 </blockquote>
-<h3 id="特殊关键字原则">特殊关键字原则</h3>
-<h3 id="特殊运算符">特殊运算符</h3>
+<h3 id="容器型">容器型</h3>
+<p>容器型是可容纳多个元素的对象，比如list, tumple, dict, set这四种类型。这些类型是python内置类型。</p>
+<blockquote>
+<p>字典是一种哈希表，通过查询值隐射另一个值</p>
+</blockquote>
+<p>###　字符串型</p>
+<p>python3中所有字符串类型被同一判定为shr对象，不论变量引用的都是单个字母还是一串字符串。</p>
+<p>关于字符串有5个高频用法。</p>
+<pre><code class="language-python">#strip 去除字符串前后的多余空格
+&gt;&gt;&gt; '  I love python\t\n  '.strip()
+&gt;&gt;&gt; 'I love python'
+
+#replace 替换字符串
+&gt;&gt;&gt; 'i love python'.replace(' ','_')
+&gt;&gt;&gt; 'i_love_python'
+
+#join 合并字符串
+&gt;&gt;&gt; '_'.join(['book','stour','count'])
+&gt;&gt;&gt; 'book_store_count'
+
+#title 首字母大写
+&gt;&gt;&gt; 'abc alice'.title()
+&gt;&gt;&gt; 'Abc Alice'
+
+#find 返回匹配字符串的起始索引
+&gt;&gt;&gt; 'i love python'.find('python')
+&gt;&gt;&gt; 7
+#p是第八个字符，所以索引位置是7，所有字符串一律被认为是列表，但列表不能被认为是字符串
+</code></pre>
+<h4 id="具体应用判断字符串str1是否由str2旋转获得">具体应用：判断字符串str1是否由str2旋转获得</h4>
+<pre><code class="language-python">def is_rotation(s1: str, s2: str) -&gt; bool:
+    if s1 is None or s2 is None:
+        return False
+    if len(s1) != len(s2):
+        return False
+
+    def is_substring(s1: str, s2: str) -&gt; bool:
+        return s1 in s2
+    return is_substring(s1, s2 + s2)
+</code></pre>
+<h4 id="具体应用简单正则表达式">具体应用：简单正则表达式</h4>
+<p>python的re模块提供了正则表达式检查功能，以下案例实现了密码检查</p>
+<ul>
+<li>密码要求6到20位</li>
+<li>只包含英文字母和数字</li>
+</ul>
+<pre><code class="language-python">import re
+
+pat = re.compile(r'[\da-zA-Z]{6,20}')
+
+print(pat.fullmatch('asd_211223sad'),
+      		pat.fullmatch('qw12'),
+			pat.fullmatch('adsfa12dqd12121def1fee'),
+      		pat.fullmatch('n0password'))
+
+&gt;&gt;&gt; None, None, None, &lt;_sre.SRE_Match object; span=(0, 10), match='n0password'&gt;
+</code></pre>
+<h3 id="自定义类">自定义类</h3>
+<p>python中使用关键字class定制类，self表示类实例对象本身</p>
+<pre><code class="language-python">class Dog(object):
+    pass
+# 所用的类都继承object类，使用__dir__可查看
+
+</code></pre>
 ]]></content>
     </entry>
 </feed>
