@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wind-uncovered.github.io</id>
     <title>Belgrade&apos;s blog</title>
-    <updated>2020-04-04T05:05:41.424Z</updated>
+    <updated>2020-04-06T04:58:27.541Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wind-uncovered.github.io"/>
     <link rel="self" href="https://wind-uncovered.github.io/atom.xml"/>
@@ -10,6 +10,101 @@
     <logo>https://wind-uncovered.github.io/images/avatar.png</logo>
     <icon>https://wind-uncovered.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Belgrade&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[[CS学习笔记(1)]MIT600SC]]></title>
+        <id>https://wind-uncovered.github.io/post/cs-xue-xi-bi-ji-1mit600sc/</id>
+        <link href="https://wind-uncovered.github.io/post/cs-xue-xi-bi-ji-1mit600sc/">
+        </link>
+        <updated>2020-04-06T04:40:07.000Z</updated>
+        <content type="html"><![CDATA[<center><h1><p>Lecture 1: intro to MIT_600CS</p></h1></center>
+<h2><p style = "color:#fb8c00">主要内容</p></h2>
+<ul>
+<li>
+<p>Understand how to map problems into a computational<br>
+framework</p>
+</li>
+<li>
+<p>Declarative knowledge is composed of statements of fact</p>
+</li>
+</ul>
+<blockquote>
+<p>&quot;A good health care plan improves the quality of medical care while saving money&quot;<br>
+&quot;y is the square root of x if and only if y*y = x&quot;</p>
+</blockquote>
+<ul>
+<li>Imperative knowledge is about how to accomplish something. Think of it as recipe.</li>
+</ul>
+<blockquote>
+<ol>
+<li>Start with a guess, g</li>
+<li>If g*g is close enough to x, then g is a good approximation of the square root of x</li>
+<li>Otherwise, create a new guess by averaging g and x/g. i.e., g new = (g old + x/g old )/2</li>
+<li>Using this new guess, go back to step 2</li>
+</ol>
+</blockquote>
+<ul>
+<li>冯诺依曼结构，视数据和程序为同一种事物</li>
+<li>语言的构成</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://wind-uncovered.github.io/post-images/1586148100948.png" alt="" loading="lazy"></figure>
+<ul>
+<li>编译器和解释器的区别</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://wind-uncovered.github.io/post-images/1586148108927.png" alt="" loading="lazy"></figure>
+<hr>
+<h2><p style = "color:#fb8c00">Problem set</p></h2>
+<h3><p style = "color:#e65100">Introduction:</p></h3>
+<p style = "color:#09a383">This problem set will introduce you to using control flow in Python and formulating a computational solution to a problem. You will design and write three simple Python programs, test them, and hand them in. Be sure to read this problem set thoroughly.
+</p>
+<p style = "color:#0277bd">该问题集将向您介绍在Python中使用控制流并制定问题的计算解决方案。
+    您将设计并编写三个简单的Python程序，对其进行测试并上交。请务必仔细阅读此问题集。</p>
+<h3><p style = "color:#e65100">Paying Off Credit Card Debt:</p></h3>
+<p style = "color:#09a383">Each month, a credit card statement will come with the option for you to pay a minimum amount of your charge, usually 2% of the balance due. However, the credit card company earns money by charging interest on the balance that you don’t pay. So even if you pay credit card payments on time, interest is still accruing on the outstanding balance.</p>
+<p style = "color:#09a383">Say you’ve made a $5,000 purchase on a credit card with 18% annual interest rate and 2% minimum monthly payment rate. After a year, how much is the remaining balance? Use the following equations.</p>
+<p><img src="https://wind-uncovered.github.io/post-images/1586148122351.png" alt="" loading="lazy"><br>
+<img src="https://wind-uncovered.github.io/post-images/1586148128239.png" alt="" loading="lazy"></p>
+<h3><p style = "color:#e65100">Problem 1: Paying the Minimum</p></h3>
+<blockquote>
+<p>Write a program to calculate the credit card balance after one year if a person only pays the minimum monthly payment required by the credit card company each month.</p>
+</blockquote>
+<blockquote>
+<p>Use input() to ask for the following three floating point numbers:</p>
+<ol>
+<li>the outstanding balance on the credit card</li>
+<li>annual interest rate</li>
+<li>minimum monthly payment rate</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>For each month, print the minimum monthly payment, remaining balance, principle paid in the format shown in the test cases below. All numbers should be rounded to the nearest penny.</p>
+<p>Finally, print the result, which should include the total amount paid that year and the remaining balance.</p>
+</blockquote>
+<h3><p style = "color:#e65100">Problem 2 : Paying Debt Off In a Year</p></h3>
+<blockquote>
+<p>Now write a program that calculates the minimum fixed monthly payment needed in order pay off a credit card balance within 12 months. We will not be dealing with a minimum monthly payment rate.</p>
+</blockquote>
+<blockquote>
+<p>Take as input() the following floating point numbers:</p>
+<ol>
+<li>the outstanding balance on the credit card</li>
+<li>annual interest rate as a decimal</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>Print out the fixed minimum monthly payment, number of months (at most 12 and possibly less than 12) it takes to pay off the debt, and the balance (likely to be a negative number).</p>
+<p>Assume that the interest is compounded monthly according to the balance at the start of the month (before the payment for that month is made). The monthly payment must be a multiple of $10 and is the same for all months. Notice that it is possible for the balance to become negative using this payment scheme. In short:</p>
+</blockquote>
+<blockquote>
+<p><em>Monthly interest rate</em> = Annual interest rate / 12.0</p>
+<p><em>Updated balance each month</em> = Previous balance * (1 + Monthly interest rate) – Minimum monthly payment</p>
+</blockquote>
+<blockquote>
+<p>Hints</p>
+<p>Start at $10 payments per month and calculate whether the balance will be paid off (taking into account the interest accrued each month). If $10 monthly payments are insufficient to pay off the debt within a year, increase the monthly payment by $10 and repeat.</p>
+</blockquote>
+<hr>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[转载] 编程入门指南]]></title>
         <id>https://wind-uncovered.github.io/post/zhuan-zai-bian-cheng-ru-men-zhi-nan/</id>
