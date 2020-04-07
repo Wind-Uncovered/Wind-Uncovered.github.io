@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wind-uncovered.github.io</id>
     <title>Belgrade&apos;s blog</title>
-    <updated>2020-04-07T01:31:21.816Z</updated>
+    <updated>2020-04-07T09:08:49.944Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wind-uncovered.github.io"/>
     <link rel="self" href="https://wind-uncovered.github.io/atom.xml"/>
@@ -11,7 +11,52 @@
     <icon>https://wind-uncovered.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Belgrade&apos;s blog</rights>
     <entry>
-        <title type="html"><![CDATA[[CS学习笔记(1)]MIT600SC]]></title>
+        <title type="html"><![CDATA[[CS学习笔记(2)]MIT6001  Lecture 2 : Handout]]></title>
+        <id>https://wind-uncovered.github.io/post/cs-xue-xi-bi-ji-2mit6001-lecture-2-handou/</id>
+        <link href="https://wind-uncovered.github.io/post/cs-xue-xi-bi-ji-2mit6001-lecture-2-handou/">
+        </link>
+        <updated>2020-04-07T09:06:12.000Z</updated>
+        <content type="html"><![CDATA[<center><h1><p>Lecture 2 : Handout</p></h1></center>
+<h2><p style = "color:#fb8c00">Main Course</p></h2>
+<ul>
+<li>
+<p>IDLE- Integrated Deveiopment Environment</p>
+<p>includes: text deitor &amp; shell &amp; integrated debugger</p>
+<p>实际上我写代码完全不用IDLE，做简单测试用IDLE倒是极好的</p>
+</li>
+<li>
+<p>Objects - has a type</p>
+<p>scalar - indivisible</p>
+<p>non-scalar</p>
+</li>
+<li>
+<p>scalar</p>
+<p><code>int</code> <code>float</code> <code>bool</code> <code>None</code> <code>str</code></p>
+</li>
+<li>
+<p>Expression - sequence of operators &amp; operat...</p>
+</li>
+<li>
+<p>Overloaded operators have a meaning that depends upon types of operands</p>
+<p><code>+</code>也是一个重载运算符，这是一个很自然的忽略，因为人类的数学中不区分整数和浮点数。所以不必对“重载”这些属于感到害怕，都当成一个加号吧。</p>
+</li>
+<li>
+<p>convert</p>
+</li>
+<li>
+<p>program = script</p>
+<p>老新手问题了。一个py文件就是一个脚本，但一个程序里面可能有很多个脚本共同组成。所以program=script，但在指向的内容上可能略有区分。</p>
+</li>
+<li>
+<p>Variable is a way to name an object</p>
+</li>
+</ul>
+<h2><p style = "color:#fb8c00">Problem Set</p></h2>
+<h2><p style = "color:#fb8c00">Solution</p></h2>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[CS学习笔记(1)]MIT6001  intro to MIT_600]]></title>
         <id>https://wind-uncovered.github.io/post/cs-xue-xi-bi-ji-1mit600sc/</id>
         <link href="https://wind-uncovered.github.io/post/cs-xue-xi-bi-ji-1mit600sc/">
         </link>
@@ -43,8 +88,10 @@ framework</p>
 </ol>
 </blockquote>
 <ul>
+<li>Algorithm is how to perform a computation</li>
+<li>fixed program computers &amp; stored program computers</li>
 <li>冯诺依曼结构，视数据和程序为同一种事物</li>
-<li>语言的构成</li>
+<li>语言的构成:语法，静态语义，唯一语义</li>
 </ul>
 <figure data-type="image" tabindex="1"><img src="https://wind-uncovered.github.io/post-images/1586148100948.png" alt="" loading="lazy"></figure>
 <ul>
@@ -103,6 +150,185 @@ framework</p>
 <p>Start at $10 payments per month and calculate whether the balance will be paid off (taking into account the interest accrued each month). If $10 monthly payments are insufficient to pay off the debt within a year, increase the monthly payment by $10 and repeat.</p>
 </blockquote>
 <hr>
+<h2><p style = "color:#fb8c00">Solution</p></h2>
+<pre><code class="language-python"># 6.00 PS1-A Solution
+# Determines remaining credit card balance after a year of making the minimum payment each month
+
+balance = float(input(&quot;Enter the outstanding balance on your credit card: &quot;))
+initialBalance = balance
+annualInterestRate = float(input(&quot;Enter the annual credit card interest rate as a decimal: &quot;))
+minMonthlyPaymentRate = float(input(&quot;Enter the minimum monthly payment rate as a decimal: &quot;))
+payinglengthintime = float(input(&quot;Enter how many years you will pay the credit card: &quot;))
+
+# how many months you will pay the credit card
+payinglengthintime = payinglengthintime * 12
+print(&quot;You will have a payment in next __%d__ months.&quot;%(payinglengthintime))
+
+# Monthly Interest Rate
+monthlyInterestRate = annualInterestRate/12
+print(&quot;The monthly interest rate is %d&quot; %(monthlyInterestRate))
+
+# Initialize state variables
+numMonths = 1
+totalAmtPaid = 0
+
+while numMonths &lt;= payinglengthintime:
+
+	print(&quot;month: &quot;, numMonths)
+	minPayment = minMonthlyPaymentRate * balance
+	
+	totalAmtPaid += minPayment
+	print(&quot;You need to pay %d yuan.&quot;%(minPayment))
+	
+	interestPaid = monthlyInterestRate * balance
+	principalPaid = minPayment - interestPaid
+	
+	balance = balance - principalPaid
+	print(&quot;The remaining balance is %d yuan at all.&quot; %(balance))
+	print(&quot;_________________________________&quot;)
+	
+	numMonths += 1
+	
+print(&quot;After %d years, the remaining balance is %d yuan.&quot;%(payinglengthintime / 12, balance))
+print(&quot;Total amount paid:&quot;,totalAmtPaid)
+print(&quot;The real interest is %f&quot;%(totalAmtPaid /payinglengthintime * 12 / initialBalance))
+</code></pre>
+<h4 id="ps1-a-test">PS1-A Test</h4>
+<blockquote>
+<p>Enter the outstanding balance on your credit card: 3000<br>
+Enter the annual credit card interest rate as a decimal: 0.13<br>
+Enter the minimum monthly payment rate as a decimal: 0.1<br>
+Enter how many years you will pay the credit card: 1<br>
+You will have a payment in next <strong>12</strong> months.<br>
+The monthly interest rate is 0<br>
+month:  1<br>
+You need to pay 300 yuan.<br>
+The remaining balance is 2732 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  2<br>
+You need to pay 273 yuan.<br>
+The remaining balance is 2488 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  3<br>
+You need to pay 248 yuan.<br>
+The remaining balance is 2266 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  4<br>
+You need to pay 226 yuan.<br>
+The remaining balance is 2064 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  5<br>
+You need to pay 206 yuan.<br>
+The remaining balance is 1880 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  6<br>
+You need to pay 188 yuan.<br>
+The remaining balance is 1712 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  7<br>
+You need to pay 171 yuan.<br>
+The remaining balance is 1560 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  8<br>
+You need to pay 156 yuan.<br>
+The remaining balance is 1421 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  9<br>
+You need to pay 142 yuan.<br>
+The remaining balance is 1294 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  10<br>
+You need to pay 129 yuan.<br>
+The remaining balance is 1178 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  11<br>
+You need to pay 117 yuan.<br>
+The remaining balance is 1073 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>month:  12<br>
+You need to pay 107 yuan.<br>
+The remaining balance is 978 yuan at all.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>After 1 years, the remaining balance is 978 yuan.<br>
+Total amount paid: 2267.5388066194178<br>
+The real interest is 0.755846</p>
+</blockquote>
+<h4 id="总结">总结：</h4>
+<p>分期付款真的是一个挺可怕的割韭菜工具，简直一本万利，要不是具有社会功能，说不定得写进刑法里。</p>
+<p>如果将每月必须还的金额继续调低，是很有可能一直还不清的。</p>
+<p>这个脚本还有一些小地方没有修饰，但无关紧要了。</p>
+<hr>
+<pre><code class="language-python"># 6.00 PS1-B Solution
+# Determines fixed minimum monthly payment needed to finish paying off credit card debt in 1 year
+
+# Retrieve input
+initialBalance = float(raw_input(&quot;Enter the outstanding balance on your credit card: &quot;))
+interestRate = float(raw_input(&quot;Enter the annual credit card interest rate as a decimal: &quot;))
+
+# Initialize state variables
+monthlyPayment = 0
+monthlyInterestRate = interestRate/12
+balance = initialBalance
+
+# Test increasing amounts of monthlyPayment in increments of $100
+# until it can be paid off in a year
+while balance &gt; 0:
+
+    monthlyPayment += 10
+    balance = initialBalance
+    numMonths = 0
+    
+    # Simulate passage of time until outstanding balance is paid off
+    # Each iteration represents 1 month
+    while numMonths &lt; 12 and balance &gt; 0:
+        
+        # Count this as a new month     
+        numMonths += 1
+
+        # Interest for the month
+        interest = monthlyInterestRate * balance
+        
+        # Subtract monthly payment from outstanding balance
+        balance -= monthlyPayment
+
+        # Add interest
+        balance += interest
+
+# Round final balance to 2 decimal places
+balance = round(balance,2)
+
+print &quot;RESULT&quot;
+print &quot;Monthly payment to pay off debt in 1 year:&quot;, monthlyPayment
+print &quot;Number of months needed:&quot;, numMonths
+print &quot;Balance:&quot;,balance
+</code></pre>
+<p>这里我直接照搬了答案，因为这个题目的主要想法就是教授寻找根号5时的做法。具体的实现细节通过while循环来解决（虽然用函数可以进一步简化结构，但这个时候还没有教函数）。这个算法的核心是固定步长的迭代，然后控制好参数，使其在达到制定目标时结束循环，并返回值。</p>
+<p>由于时间问题，ps1-C我就不做了。</p>
+<p>本期笔记到此结束。</p>
 ]]></content>
     </entry>
     <entry>
