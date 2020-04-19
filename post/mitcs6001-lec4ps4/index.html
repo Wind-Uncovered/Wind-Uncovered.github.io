@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>MITcs6001 lec4,ps4 | Belgrade&#39;s blog</title>
+<meta name="description" content="初创时期，会记录下多少东西呢？">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://wind-uncovered.github.io/favicon.ico?v=1587295772467">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://wind-uncovered.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://wind-uncovered.github.io">
+        <img class="avatar" src="https://wind-uncovered.github.io/images/avatar.png?v=1587295772467" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://wind-uncovered.github.io">
+        <h1 class="site-title">Belgrade&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://wind-uncovered.github.io/post-images/mitcs6001-lec4ps4.jpg')">
+            </div>
+          
+          <h2 class="post-title">MITcs6001 lec4,ps4</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-04-19</span>
+            
+          </div>
+          <div class="post-content">
+            <center><h1><p>Lecture 4 : Handout</p></h1></center>
+<h2><p style = "color:#fb8c00">Main Idea</p></h2>
+<ul>
+<li>
+<p>Function</p>
+<p>I consider the function as a bundle of code, as perfessor said, its character is about two usage: <code>Decomposition</code> and <code>Abstract</code></p>
+<p>Accordind to <code>Decopmosition</code> , the construction of the programming emerged from the mass of code. It helps people easier to control the program.</p>
+<p>And comes to <code>Abstract</code>, which is a term for black box, it seal the complexity of code, and make it more easy to reuse.</p>
+</li>
+<li>
+<p>Scope</p>
+<p><code>Scope</code> is a map. A map is constructed by the domain and range.</p>
+<p>The domain of <code>Scope</code> is the name you used, so the range of <code>Scope</code> is the object in the memory.</p>
+</li>
+</ul>
+<h2><p style = "color:#fb8c00">Problem Set #4
+    </br> Pseudocode Solutions</p></h2>
+<h3><p style = "color:#e65100">Introduction:</p></h3>
+<p style = "color:#09a383">Encryption is the process of obscuring information to make it unreadable without special knowledge. For centuries, people have devised schemes to encrypt messages — some better than others — but the advent of the computer and the Internet revolutionized the field. These days, it's hard not to encounter some sort of encryption, whether you are buying something online or logging into Athena.</p>
+<p style = "color:#09a383">
+    A cipher is an algorithm for performing encryption (and the reverse, decryption). The original information is called plaintext. After it is encrypted, it is called ciphertext. The ciphertext message contains all the information of the plaintext message, but it's not in a format readable by a human or computer without the proper mechanism to decrypt it; it should resemble random gibberish to those not intended to read it.</p>
+<p style = "color:#09a383">A cipher usually depends on a piece of auxiliary information, called a key. The key is incorporated into the encryption process; the same plaintext encrypted with two different keys should have two different ciphertexts. Without the key, it should be difficult to decrypt the resulting ciphertext into readable plaintext.</p>
+<p style = "color:#09a383">
+This assignment will deal with a well-known (though not very secure) encryption method called the Caesar cipher. In this problem set you will need to devise your own algorithms and will practice using recursion to solve a non-trivial problem.</p>
+<h3><p style = "color:#e65100">Solution: </p></h3>
+<p>在问题二中，我做出了一个排序字典的算法，但在用这个字典来决定最佳秘钥时，我意识到对字典排序是几乎没有意义的事情，因为字典不能通过索引取值。</p>
+<p>除此之外，我还发现了一个很申必的事情，对一个列表使用set函数去重，它有时候会保持原有顺序，有时候不会，真是太申必了。尽管我重构了算法解决了这一毛病，但是没有记录下当时的代码和结果让人有点遗憾。真是太申必了。</p>
+<pre><code class="language-python"># Problem 1 Encryption and Decryption
+
+
+def build_coder(shift):
+    &quot;&quot;&quot;
+    Returns a dict that can apply a Caesar cipher to a letter.
+    The cipher is defined by the shift value. Ignores non-letter characters
+    like punctuation and numbers.
+    &quot;&quot;&quot;
+
+    shift = shift % 27
+    asc_lst1 = &quot;abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz&quot;
+    asc_lst2 = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;
+    lst = &quot; ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;
+    dic = {}
+    dic[&quot;!&quot;] = &quot;!&quot;
+    dic[&quot;,&quot;] = &quot;,&quot;
+    dic[&quot;.&quot;] = &quot;.&quot;
+    dic['&quot;'] = '&quot;'
+    dic[&quot;?&quot;] = &quot;?&quot;
+    dic[&quot;:&quot;] = &quot;:&quot;
+
+    for letter in lst:
+        if letter in asc_lst1:
+            order = asc_lst1.find(letter) + shift
+            dic[letter] = asc_lst1[order]
+        elif letter in asc_lst2:
+            order = asc_lst2.find(letter) + shift
+            dic[letter] = asc_lst2[order]
+    
+    return dic
+
+
+def ceaser_cryption(shift, letters):
+    coder = build_coder(shift)
+    message = &quot;&quot;
+
+    for letter in letters:
+        if letter in coder.keys():
+            message += coder[letter]
+        else:
+            message += letter
+    
+    return message
+    
+
+# *************************************
+# The part of Caesar Cipher is finished.
+# But the problem is still unfinished bucause you don't know the shift key.
+# To solve this problem, you can statisc the number of the text used in text.
+# This may be helpful to find the key
+# *************************************
+
+
+# Problem 2 Code-breaking
+
+
+def count_and_sort(text, mode = 'automode'):
+    &quot;return the most used letter&quot;
+    
+    text = text.lower()
+    original_dic = {}
+    
+    for letter in text:
+        if letter not in original_dic.keys():
+            original_dic[letter] = 1
+        else:
+            original_dic[letter] += 1
+    
+    lst = list(original_dic.values())
+    lst.sort(reverse = True)
+
+    lst_new = []
+    for i in lst:
+        if i not in lst_new:
+            lst_new.append(i)
+
+    if mode == &quot;drivemode&quot;:
+        dic = {}
+        for i in lst_new:
+            for key, val in original_dic.items():
+                if i == val:
+                    dic[key] = val
+    
+        return dic
+    else:
+        dic = {}
+        for key, val in original_dic.items():
+            if val == lst_new[0]:
+                dic[key] = val
+        return dic
+
+
+def shift_creater(shift_letter_list):
+    s = 'efghijklmnopqrstuvwxyz abc'
+    key = []
+    for i in shift_letter_list:
+        key.append(s.find(i))
+
+    return key
+
+
+# *************************************
+# Based on above results, you can now achieve a shift list
+# Besides, you can switch to the &quot;drivemode&quot; to decide which
+#   key you want finally which is based on 
+#   the method called &quot;Exhaustive Enumeration&quot;
+# *************************************
+
+
+# Problem 3 Multi-level Encryption &amp; Decryption
+
+
+def apply_shifts(text, shifts):
+    
+    encode_message = &quot;&quot;    
+        
+    _i = 0
+    for shift in shifts:
+        coder = build_coder(shift[1])
+        i = 0
+        while i &lt; shift[0]:
+            encode_message += coder[text[_i]]
+            i += 1
+        
+    return encode_message
+
+
+def load_code():
+    name = &quot;fable.txt&quot;
+    with open(name) as text:
+        code = text.read()
+    
+    return code
+
+def load_words():
+    name2 = &quot;words.txt&quot;
+    with open(name2) as text:
+        line = text.read()
+        wordlist = line.split(&quot; &quot;)
+    
+    return wordlist
+
+
+def switch_code(word, code, wordlist):
+    length = len(word) + 1
+    renew_code = code[length:]
+    for i in range(27):
+        using_code = ceaser_cryption(i, renew_code)
+        code_list = using_code.split(&quot; &quot;)
+        if code_list[0].lower() in wordlist:
+            word = code_list[0]
+            return word
+
+
+def decrypt_fable(code, wordlist):
+    if not code:
+        return 0
+
+    length = 0
+
+    for i in range(27):
+        using_code = ceaser_cryption(i, code)
+        code_list = using_code.split(&quot; &quot;)
+        if code_list[0].lower() in wordlist:
+            word = code_list[0]
+            if not switch_code(word, code, wordlist):
+                continue
+            else:
+                print(word)
+                length = len(word) + 1
+                break
+    
+    code_new = code[length:]
+    decrypt_fable(code_new, wordlist)
+
+
+if __name__ == &quot;__main__&quot;:
+    # code = load_code()
+    # s = '&quot;,.'
+    # for i in s:
+    #     code.replace(i, &quot;&quot;)
+    # wordlist = load_words()
+    # decrypt_fable(code, wordlist)
+    for i in range(27):
+        print(&quot;oh a he appointed &quot; + ceaser_cryption(i, &quot;tvtlu&quot;))
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://wind-uncovered.github.io/post/mit-sc6001-3/">
+              <h3 class="post-title">
+                下一篇：MIT SC6001 (3)
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">初创时期，会记录下多少东西呢？</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://wind-uncovered.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

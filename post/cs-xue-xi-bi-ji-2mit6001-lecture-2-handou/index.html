@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://wind-uncovered.github.io/favicon.ico?v=1586259126479">
+<link rel="shortcut icon" href="https://wind-uncovered.github.io/favicon.ico?v=1587295772467">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://wind-uncovered.github.io/styles/main.css">
 
@@ -30,7 +30,7 @@
   <div class="site-header">
     <div class="left">
       <a href="https://wind-uncovered.github.io">
-        <img class="avatar" src="https://wind-uncovered.github.io/images/avatar.png?v=1586259126479" alt="" width="32px" height="32px">
+        <img class="avatar" src="https://wind-uncovered.github.io/images/avatar.png?v=1587295772467" alt="" width="32px" height="32px">
       </a>
       <a href="https://wind-uncovered.github.io">
         <h1 class="site-title">Belgrade&#39;s blog</h1>
@@ -124,8 +124,122 @@
 <p>Variable is a way to name an object</p>
 </li>
 </ul>
-<h2><p style = "color:#fb8c00">Problem Set</p></h2>
+<h2><p style = "color:#fb8c00">Problem Set #2 
+    </br> Successive Approximation and a Wordgame</p></h2>
+<h3><p style = "color:#e65100">Introduction:</p></h3>
+<p style = "color:#09a383">Successive approximation is a problem-solving method where you try to guess the right answer to a problem and then check your guess. If the guess is good enough, you're done. Otherwise, you keep improving your guess in small increments and checking it, getting closer and closer to the right answer, until you determine that the guess is good enough. For the first 3 problems of this problem set, we will look at Newton's method, which uses successive approximation to find the roots of a function.
+</p>
+<p style = "color:#0277bd">逐次逼近是一种解决问题的方法，在此方法中，您尝试猜测问题的正确答案，然后检查您的猜测。 如果猜测足够好，那么您就完成了。 否则，您将不断以较小的增量改进猜测并进行检查，越来越接近正确的答案，直到您确定猜测足够好为止。 对于前三个问题
+    在这个问题集上，我们将看一下牛顿的方法，该方法使用逐次逼近法来找到函数的根。</p>
+<p style = "color:#09a383">
+Secondly, we will have some fun with Python, and get some practice using strings and string operations. We would like you to implement the word game hangman as a 1-player game against the computer.
+</p>
+<p style = "color:#0277bd">其次，我们将对Python有所了解，并获得一些使用字符串和字符串操作的练习。 我们希望您将单词游戏hangman实施为针对计算机的1人游戏。</p>
+<h3><p style = "color:#e65100">Polynomials</p></h3>
+<figure data-type="image" tabindex="1"><img src="https://wind-uncovered.github.io/post-images/1586316338658.png" alt="" loading="lazy"></figure>
+<h3><p style = "color:#e65100">Newton's Method</p></h3>
+<figure data-type="image" tabindex="2"><img src="https://wind-uncovered.github.io/post-images/1586316354590.png" alt="" loading="lazy"></figure>
+<h3><p style = "color:#e65100">Problem 1 : evaluate_poly function(多项式函数) </p></h3>
+<p>Implement the evaluate_poly function. This function evaluates a polynomial function for the given x value. It takes in a tuple of numbers poly and a number x. By number, we mean that x and each element of poly is a float. evaluate_poly takes the polynomial represented by poly and computes its value at x. It returns this value as a float.</p>
+<figure data-type="image" tabindex="3"><img src="https://wind-uncovered.github.io/post-images/1586316363158.png" alt="" loading="lazy"></figure>
+<h3><p style = "color:#e65100">Problem 2 : compute_deriv function(求导函数)</p></h3>
+<p>Implement the compute_deriv function. This function computes the derivative of a polynomial function. It takes in a tuple of numbers poly and returns the derivative, which is also a polynomial represented by a tuple.</p>
+<figure data-type="image" tabindex="4"><img src="https://wind-uncovered.github.io/post-images/1586316368682.png" alt="" loading="lazy"></figure>
+<h3><p style = "color:#e65100">Problem 3 : Implementing Newton's Method</p></h3>
+<p>Implement the compute_root function. This function applies Newton's method of successive approximation as described above to find a root of the polynomial function. It takes in a tuple of numbers poly, an initial guess x_0, and an error bound epsilon. It returns a tuple. The first element is the root of the polynomial represented by poly; the second element is the number of<br>
+iterations it took to get to that root.</p>
+<p>The function starts at x_0. It then applies Newton's method. It ends when it finds a root x such that the absolute value of f(x) is less than epsilon, i.e. f(x) is close enough to zero. It returns the root it found as a float.</p>
+<h3><p style = "color:#e65100">Problem 4 : Hangman</p></h3>
 <h2><p style = "color:#fb8c00">Solution</p></h2>
+<pre><code class="language-python"># 6.00 Problem Set 2
+#
+# newton method
+
+def evaluate_poly(poly, x):
+	&quot;&quot;&quot;
+    Computes the value of a polynomial function at given value x. Returns that value.
+
+    Example:
+    &gt;&gt;&gt; poly = [0.0, 0.0, 5.0, 9.3, 7.0]    # f(x) = 5x^2 + 9.3x^3 + 7x^4 
+    &gt;&gt;&gt; x = -13
+    &gt;&gt;&gt; print evaluate_poly(poly, x)  # f(-13) = 5(-13)^2 + 9.3(-13)^3 + 7(-13)^4 
+    180339.9
+
+    poly: list of numbers, length &gt; 0
+    x: number
+    returns: float
+    &quot;&quot;&quot;
+	result = 0
+	length = len(poly)
+
+	for i in range(0, length):
+		result += x**i*poly[i]
+
+	return result
+
+
+
+def compute_derivate(poly):
+	&quot;&quot;&quot;
+    Computes and returns the derivative of a polynomial function. If the
+    derivative is 0, returns [0.0].
+
+    Example:
+    &gt;&gt;&gt; poly = [-13.39, 0.0, 17.5, 3.0, 1.0]    # - 13.39 + 17.5x^2 + 3x^3 + x^4
+    &gt;&gt;&gt; print compute_deriv(poly)        # 35^x + 9x^2 + 4x^3
+    [0.0, 35.0, 9.0, 4.0]
+
+    poly: list of numbers, length &gt; 0
+    returns: list of numbers
+    &quot;&quot;&quot;
+	length = len(poly)
+
+	poly_new = [i*poly[i] for i in range(0,length)]
+	poly_new.pop(0)
+
+	return poly_new
+
+# if __name__==&quot;__main__&quot;:
+# 	poly = [1, 2, 3, 4]
+# 	print(compute_derivate(poly))
+
+
+
+def newton_root(poly, epsilon):
+    &quot;&quot;&quot;
+    
+    Uses Newton's method to find and return a root of a polynomial function.
+    Returns a list containing the root and the number of iterations required
+    to get to the root.
+
+    Example:
+    &gt;&gt;&gt; poly = [-13.39, 0.0, 17.5, 3.0, 1.0]    # - 13.39 + 17.5x^2 + 3x^3 + x^4
+    &gt;&gt;&gt; x_0 = 0.1
+    &gt;&gt;&gt; epsilon = .0001
+    &gt;&gt;&gt; print compute_root(poly, x_0, epsilon)
+    [0.80679075379635201, 8]
+
+    poly: list of numbers, length &gt; 1.
+         Represents a polynomialfunction containing at least one real root.
+         The derivative of this polynomial function at x_0 is not 0.
+    x_0: float
+    epsilon: float &gt; 0
+    returns: list [float, int]
+    &quot;&quot;&quot;
+	root = poly[-1] / poly[0]
+	counter = 1
+
+	while abs(evaluate_poly(poly, root)) &gt;= epsilon:
+		root = (root - evaluate_poly(poly, root) 
+				/ evaluate_poly(compute_derivate(poly), root))
+		counter += 1
+
+	return [root,counter]
+
+# if __name__==&quot;__main__&quot;:
+# 	gx = [1, 2, 1]
+# 	print(newton_root(gx, 0.001))
+</code></pre>
 
           </div>
         </div>

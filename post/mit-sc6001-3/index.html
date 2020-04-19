@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>MIT SC6001 (3) | Belgrade&#39;s blog</title>
+<meta name="description" content="初创时期，会记录下多少东西呢？">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://wind-uncovered.github.io/favicon.ico?v=1587295772467">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://wind-uncovered.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://wind-uncovered.github.io">
+        <img class="avatar" src="https://wind-uncovered.github.io/images/avatar.png?v=1587295772467" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://wind-uncovered.github.io">
+        <h1 class="site-title">Belgrade&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://wind-uncovered.github.io/post-images/mit-sc6001-3.gif')">
+            </div>
+          
+          <h2 class="post-title">MIT SC6001 (3)</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-04-19</span>
+            
+          </div>
+          <div class="post-content">
+            <center><h1><p>Lecture 3 : Problem Solving</p></h1></center>
+<h2><p style = "color:#fb8c00">Main Course</p></h2>
+<ul>
+<li>Decrementing function
+<ul>
+<li>map set of program variables to an integer</li>
+<li>starts with a non-negative value</li>
+<li>when &lt;=0, loop terminates</li>
+<li>decressed each iteration</li>
+</ul>
+</li>
+<li>Exhaustive Enumeration(an important idea)</li>
+<li>range(x, y) =[x, x+1, ..., y-1]</li>
+<li>Approximation
+<ul>
+<li>Find an answer that is good enough</li>
+</ul>
+</li>
+<li>Bisection search
+<ul>
+<li>cut search space in half each iteration</li>
+</ul>
+</li>
+</ul>
+<h2><p style = "color:#fb8c00">Problem Set #3
+    </br> Wordgames</p></h2>
+<h3><p style = "color:#e65100">Introduction:</p></h3>
+<p style = "color:#09a383">In this problem set, you'll implement two versions of the 6.00 wordgame!
+</p>
+<p style = "color:#09a383">
+Don't be intimidated by the length of this problem set. It's a lot of reading, but it is very doable.
+</p>
+<p style = "color:#09a383">
+Let's begin by describing the 6.00 wordgame: This game is a lot like Scrabble or Text Twist, if you've played those. Letters are dealt to players, who then construct one or more words out of their letters. Each valid word receives a score, based on the length of the word and the letters in that word.
+</p>
+<p style = "color:#09a383">
+The rules of the game are as follows:
+</p>
+<h4><p style = "color:#afb42b">Dealing</p></h4>
+<ul>
+<li>A player is dealt a hand of n letters chosen at random (assume n=7 for now).</li>
+<li>The player arranges the hand into as many words as they want out of the letters, but using each letter at most once.</li>
+<li>Some letters may remain unused (these won't be scored).</li>
+</ul>
+<h4><p style = "color:#afb42b">Scoring</p></h4>
+<ul>
+<li>
+<p>The score for the hand is the sum of the score for the words times the length of the word.</p>
+</li>
+<li>
+<p>The score for a word is the sum of the points for letters in the word, multiplied by the length of the word, plus 50 points if all n letters are used on the first go.</p>
+</li>
+<li>
+<p>Letters are scored as in Scrabble; A is worth 1, B is worth 3, C is worth 3, D is<br>
+worth 2, E is worth 1, and so on. We have defined the dictionary</p>
+<p><code>SCRABBLE_LETTER_VALUES</code></p>
+<p>that maps each lowercase letter to its Scrabble letter value.</p>
+</li>
+<li>
+<p>For example, ‘weed’ would be worth 32 points ((4+1+1+2)<em>4=32), as long as the hand actually has 1 ‘w’, 2 ‘e’s, and 1 ‘d’</em></p>
+</li>
+<li>
+<p>*As another example, if n=7 and you get ‘waybill’ on the first go, it would be worth 155 points ((4+1+4+3+1+1+1)*7=105, +50) for the bonus of using all<br>
+seven letters).</p>
+</li>
+</ul>
+<h3><p style = "color:#e65100">Problems</p></h3>
+<p>This problem ser is divided by two parts, <code>Part A</code> and <code>Part B</code>.</p>
+<p><code>Part A</code> includes problems from 1 to 5, while <code>Part B</code> includes that from 6-a to 6-c. Have a good time with the problems.</p>
+<p style = "color:#09a383">IF YOU NEED THE PROBLEM SET, YOU CAN GO TO MIT OCW, AND SEARCH 6001.</p>
+<p style = "color:#09a383">OR YOU CAN CONTACT ME BY EAMIL: abdeeglr@163.com</p>
+<h2><p style = "color:#fb8c00">Solution</p></h2
+<pre><code class="language-python"># 6.00 Problem Set 3A Solutions
+#
+# The 6.00 Word Game
+# Finished by: ABdeeglr
+
+
+import random
+import string
+
+
+VOWELS = 'aeiou'
+CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
+WORDLIST_FILENAME = &quot;words.txt&quot;
+
+
+Global_Const_letters_to_value = {
+    'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1,
+    'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8,
+    'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1,
+    'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1,
+    'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
+}
+
+
+# ___________________________________
+#     initialize settings
+#     create a word list reposities
+#     generate a random hand
+# ____________________________________
+
+
+def load_words():
+    &quot;&quot;&quot;
+    Returns a list of valid words. Words are strings of lowercase letters.
+    
+    Depending on the size of the word list, this function may
+    take a while to finish.
+    &quot;&quot;&quot;
+    with open(WORDLIST_FILENAME) as inFile:
+        wordlist = []
+        while True:
+            line = inFile.readline()
+            if not line:
+                break
+            else:
+                wordlist.append(line.strip().lower())
+    return wordlist
+
+
+def deal_hand(n):
+    &quot;Generate a new hand&quot;
+
+    num_vowel = int(n / 3)
+    num_const = n - num_vowel
+    hand = {}
+    
+    for _i in range(num_vowel):
+        x = VOWELS[random.randrange(len(VOWELS))]
+        if x not in hand:
+            hand[x] = 1
+        else:
+            hand[x] += 1
+    
+    for _j in range(num_const):
+        x = CONSONANTS[random.randrange(len(CONSONANTS))]
+        if x not in hand:
+            hand[x] = 1
+        else:
+            hand[x] += 1
+    
+    return hand
+
+
+def initialize_settings():
+    &quot;&quot;&quot;
+    According this function to get the texts and a hand
+    &quot;&quot;&quot;
+    hand_size = random.randint(6,15)
+    wordlist = load_words()
+    hand = deal_hand(hand_size)
+
+    return wordlist, hand
+# ___________________________________
+#     beginning of the main funcition
+#     include:
+#         get_word_score()
+#         get_frequency_dict()
+#         display_hand()
+#         update_hand()
+#         is_word_in_hand()
+#         is_valid_word()
+# ____________________________________
+
+
+def get_word_score(word):
+    # calculate the score of a word, but still not the ture score of a hand
+    if not word:
+        return 0
+    else:
+        usingword = word.lower()
+        sum = 0
+        for letter in usingword:
+            sum += Global_Const_letters_to_value[letter]
+        
+        return sum * len(usingword)
+
+
+def get_frequency_dict(word):
+    &quot;Convert the word to a dict object&quot;
+
+    dic = {}
+    for letter in word:
+        if letter not in dic:
+            dic[letter] = 1
+        else:
+            dic[letter] += 1
+    
+    return dic
+
+
+def display_hand(hand):
+    &quot;display a hand in a user-friendly way&quot;
+    for letter in hand.keys():
+        for _i in range(hand[letter]):
+            print(letter, end=&quot; &quot;)
+    print()
+
+
+def update_hand(word, hand):
+    for letter in word:
+        hand[letter] -= 1
+        if hand[letter] == 0:
+            del hand[letter]
+    return hand
+
+
+def is_word_in_hand(word, hand):
+    for letter in word:
+        if letter in hand.keys():
+            pass
+        else:
+            return False
+    return True
+
+def is_valid_word(word, hand, word_list):
+    if word in word_list:
+        if is_word_in_hand(word, hand):
+            word = get_frequency_dict(word)
+            for key in word.keys():
+                if word[key] &gt; hand[key]:
+                    return False
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+# main game construction
+def main():
+    print(&quot;Welcome to my game! Welcome!&quot;)
+    print(&quot;Now is loading the file...&quot;)
+    wordlist, usinghand = initialize_settings()
+    print(f&quot;{len(wordlist)} words loaded.&quot;)
+    print(&quot;Game start!&quot;)
+    print()
+    print(&quot;__________________________&quot;)
+    
+    play_hand(usinghand, wordlist)
+    while True:
+        print(&quot;&quot;&quot;
+              Do you want to play it again?
+              enter 'n' to play a *new* hand.
+              enter 'r' to play the last hand again.
+              enter 'e' to quit the game
+              &quot;&quot;&quot;)
+
+        ans = input(&quot;&gt;&gt;&quot;)
+        if ans == 'n':
+            wordlist, usinghand = initialize_settings()
+            play_hand(usinghand, wordlist)
+        elif ans == 'r':
+            play_hand(usinghand, wordlist)
+        elif ans == 'e':
+            break
+        else:
+            print(&quot;我放弃！自毁程序启动！&quot;)
+            for i in range(51):
+                print(f&quot;自毁程序启动中！{50 - i}&quot;)
+    
+
+def play_hand(hand, word_list):
+    &quot;Allow the users to play the given hand, as follows:&quot;
+    score = 0
+    total = 0
+    player_round = 1
+    while True:
+        print(&quot;Current hand:  &quot;, end=&quot;&quot;)
+        display_hand(hand)
+        answer = input('Enter word, or a &quot;.&quot; to indicate that you are finished:')
+        print()
+        if answer == &quot;.&quot;:
+            print(f&quot;Total score: {total}&quot;)
+            break
+        elif is_valid_word(answer, hand, word_list):
+            score = get_word_score(answer)
+            if get_frequency_dict(answer) == hand and player_round == 1:
+                score += 50
+            total += score
+            print(f&quot;{answer} earned {score} points. Total: {total} points&quot;)
+            hand = update_hand(answer, hand)
+            player_round += 1
+        else:
+            print(&quot;Invalid word, Please try agian.&quot;)
+            player_round += 1
+        
+
+        if not hand:
+            break
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://wind-uncovered.github.io/post/cs-xue-xi-bi-ji-2mit6001-lecture-2-handou/">
+              <h3 class="post-title">
+                下一篇：[CS学习笔记(2)]MIT6001  Lecture 2 : Handout
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">初创时期，会记录下多少东西呢？</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://wind-uncovered.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

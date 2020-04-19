@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wind-uncovered.github.io</id>
     <title>Belgrade&apos;s blog</title>
-    <updated>2020-04-07T11:32:10.218Z</updated>
+    <updated>2020-04-19T11:29:37.506Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wind-uncovered.github.io"/>
     <link rel="self" href="https://wind-uncovered.github.io/atom.xml"/>
@@ -10,6 +10,531 @@
     <logo>https://wind-uncovered.github.io/images/avatar.png</logo>
     <icon>https://wind-uncovered.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Belgrade&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[MITcs6001 lec4,ps4]]></title>
+        <id>https://wind-uncovered.github.io/post/mitcs6001-lec4ps4/</id>
+        <link href="https://wind-uncovered.github.io/post/mitcs6001-lec4ps4/">
+        </link>
+        <updated>2020-04-19T11:27:38.000Z</updated>
+        <content type="html"><![CDATA[<center><h1><p>Lecture 4 : Handout</p></h1></center>
+<h2><p style = "color:#fb8c00">Main Idea</p></h2>
+<ul>
+<li>
+<p>Function</p>
+<p>I consider the function as a bundle of code, as perfessor said, its character is about two usage: <code>Decomposition</code> and <code>Abstract</code></p>
+<p>Accordind to <code>Decopmosition</code> , the construction of the programming emerged from the mass of code. It helps people easier to control the program.</p>
+<p>And comes to <code>Abstract</code>, which is a term for black box, it seal the complexity of code, and make it more easy to reuse.</p>
+</li>
+<li>
+<p>Scope</p>
+<p><code>Scope</code> is a map. A map is constructed by the domain and range.</p>
+<p>The domain of <code>Scope</code> is the name you used, so the range of <code>Scope</code> is the object in the memory.</p>
+</li>
+</ul>
+<h2><p style = "color:#fb8c00">Problem Set #4
+    </br> Pseudocode Solutions</p></h2>
+<h3><p style = "color:#e65100">Introduction:</p></h3>
+<p style = "color:#09a383">Encryption is the process of obscuring information to make it unreadable without special knowledge. For centuries, people have devised schemes to encrypt messages — some better than others — but the advent of the computer and the Internet revolutionized the field. These days, it's hard not to encounter some sort of encryption, whether you are buying something online or logging into Athena.</p>
+<p style = "color:#09a383">
+    A cipher is an algorithm for performing encryption (and the reverse, decryption). The original information is called plaintext. After it is encrypted, it is called ciphertext. The ciphertext message contains all the information of the plaintext message, but it's not in a format readable by a human or computer without the proper mechanism to decrypt it; it should resemble random gibberish to those not intended to read it.</p>
+<p style = "color:#09a383">A cipher usually depends on a piece of auxiliary information, called a key. The key is incorporated into the encryption process; the same plaintext encrypted with two different keys should have two different ciphertexts. Without the key, it should be difficult to decrypt the resulting ciphertext into readable plaintext.</p>
+<p style = "color:#09a383">
+This assignment will deal with a well-known (though not very secure) encryption method called the Caesar cipher. In this problem set you will need to devise your own algorithms and will practice using recursion to solve a non-trivial problem.</p>
+<h3><p style = "color:#e65100">Solution: </p></h3>
+<p>在问题二中，我做出了一个排序字典的算法，但在用这个字典来决定最佳秘钥时，我意识到对字典排序是几乎没有意义的事情，因为字典不能通过索引取值。</p>
+<p>除此之外，我还发现了一个很申必的事情，对一个列表使用set函数去重，它有时候会保持原有顺序，有时候不会，真是太申必了。尽管我重构了算法解决了这一毛病，但是没有记录下当时的代码和结果让人有点遗憾。真是太申必了。</p>
+<pre><code class="language-python"># Problem 1 Encryption and Decryption
+
+
+def build_coder(shift):
+    &quot;&quot;&quot;
+    Returns a dict that can apply a Caesar cipher to a letter.
+    The cipher is defined by the shift value. Ignores non-letter characters
+    like punctuation and numbers.
+    &quot;&quot;&quot;
+
+    shift = shift % 27
+    asc_lst1 = &quot;abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz&quot;
+    asc_lst2 = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;
+    lst = &quot; ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;
+    dic = {}
+    dic[&quot;!&quot;] = &quot;!&quot;
+    dic[&quot;,&quot;] = &quot;,&quot;
+    dic[&quot;.&quot;] = &quot;.&quot;
+    dic['&quot;'] = '&quot;'
+    dic[&quot;?&quot;] = &quot;?&quot;
+    dic[&quot;:&quot;] = &quot;:&quot;
+
+    for letter in lst:
+        if letter in asc_lst1:
+            order = asc_lst1.find(letter) + shift
+            dic[letter] = asc_lst1[order]
+        elif letter in asc_lst2:
+            order = asc_lst2.find(letter) + shift
+            dic[letter] = asc_lst2[order]
+    
+    return dic
+
+
+def ceaser_cryption(shift, letters):
+    coder = build_coder(shift)
+    message = &quot;&quot;
+
+    for letter in letters:
+        if letter in coder.keys():
+            message += coder[letter]
+        else:
+            message += letter
+    
+    return message
+    
+
+# *************************************
+# The part of Caesar Cipher is finished.
+# But the problem is still unfinished bucause you don't know the shift key.
+# To solve this problem, you can statisc the number of the text used in text.
+# This may be helpful to find the key
+# *************************************
+
+
+# Problem 2 Code-breaking
+
+
+def count_and_sort(text, mode = 'automode'):
+    &quot;return the most used letter&quot;
+    
+    text = text.lower()
+    original_dic = {}
+    
+    for letter in text:
+        if letter not in original_dic.keys():
+            original_dic[letter] = 1
+        else:
+            original_dic[letter] += 1
+    
+    lst = list(original_dic.values())
+    lst.sort(reverse = True)
+
+    lst_new = []
+    for i in lst:
+        if i not in lst_new:
+            lst_new.append(i)
+
+    if mode == &quot;drivemode&quot;:
+        dic = {}
+        for i in lst_new:
+            for key, val in original_dic.items():
+                if i == val:
+                    dic[key] = val
+    
+        return dic
+    else:
+        dic = {}
+        for key, val in original_dic.items():
+            if val == lst_new[0]:
+                dic[key] = val
+        return dic
+
+
+def shift_creater(shift_letter_list):
+    s = 'efghijklmnopqrstuvwxyz abc'
+    key = []
+    for i in shift_letter_list:
+        key.append(s.find(i))
+
+    return key
+
+
+# *************************************
+# Based on above results, you can now achieve a shift list
+# Besides, you can switch to the &quot;drivemode&quot; to decide which
+#   key you want finally which is based on 
+#   the method called &quot;Exhaustive Enumeration&quot;
+# *************************************
+
+
+# Problem 3 Multi-level Encryption &amp; Decryption
+
+
+def apply_shifts(text, shifts):
+    
+    encode_message = &quot;&quot;    
+        
+    _i = 0
+    for shift in shifts:
+        coder = build_coder(shift[1])
+        i = 0
+        while i &lt; shift[0]:
+            encode_message += coder[text[_i]]
+            i += 1
+        
+    return encode_message
+
+
+def load_code():
+    name = &quot;fable.txt&quot;
+    with open(name) as text:
+        code = text.read()
+    
+    return code
+
+def load_words():
+    name2 = &quot;words.txt&quot;
+    with open(name2) as text:
+        line = text.read()
+        wordlist = line.split(&quot; &quot;)
+    
+    return wordlist
+
+
+def switch_code(word, code, wordlist):
+    length = len(word) + 1
+    renew_code = code[length:]
+    for i in range(27):
+        using_code = ceaser_cryption(i, renew_code)
+        code_list = using_code.split(&quot; &quot;)
+        if code_list[0].lower() in wordlist:
+            word = code_list[0]
+            return word
+
+
+def decrypt_fable(code, wordlist):
+    if not code:
+        return 0
+
+    length = 0
+
+    for i in range(27):
+        using_code = ceaser_cryption(i, code)
+        code_list = using_code.split(&quot; &quot;)
+        if code_list[0].lower() in wordlist:
+            word = code_list[0]
+            if not switch_code(word, code, wordlist):
+                continue
+            else:
+                print(word)
+                length = len(word) + 1
+                break
+    
+    code_new = code[length:]
+    decrypt_fable(code_new, wordlist)
+
+
+if __name__ == &quot;__main__&quot;:
+    # code = load_code()
+    # s = '&quot;,.'
+    # for i in s:
+    #     code.replace(i, &quot;&quot;)
+    # wordlist = load_words()
+    # decrypt_fable(code, wordlist)
+    for i in range(27):
+        print(&quot;oh a he appointed &quot; + ceaser_cryption(i, &quot;tvtlu&quot;))
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MIT SC6001 (3)]]></title>
+        <id>https://wind-uncovered.github.io/post/mit-sc6001-3/</id>
+        <link href="https://wind-uncovered.github.io/post/mit-sc6001-3/">
+        </link>
+        <updated>2020-04-19T11:25:25.000Z</updated>
+        <content type="html"><![CDATA[<center><h1><p>Lecture 3 : Problem Solving</p></h1></center>
+<h2><p style = "color:#fb8c00">Main Course</p></h2>
+<ul>
+<li>Decrementing function
+<ul>
+<li>map set of program variables to an integer</li>
+<li>starts with a non-negative value</li>
+<li>when &lt;=0, loop terminates</li>
+<li>decressed each iteration</li>
+</ul>
+</li>
+<li>Exhaustive Enumeration(an important idea)</li>
+<li>range(x, y) =[x, x+1, ..., y-1]</li>
+<li>Approximation
+<ul>
+<li>Find an answer that is good enough</li>
+</ul>
+</li>
+<li>Bisection search
+<ul>
+<li>cut search space in half each iteration</li>
+</ul>
+</li>
+</ul>
+<h2><p style = "color:#fb8c00">Problem Set #3
+    </br> Wordgames</p></h2>
+<h3><p style = "color:#e65100">Introduction:</p></h3>
+<p style = "color:#09a383">In this problem set, you'll implement two versions of the 6.00 wordgame!
+</p>
+<p style = "color:#09a383">
+Don't be intimidated by the length of this problem set. It's a lot of reading, but it is very doable.
+</p>
+<p style = "color:#09a383">
+Let's begin by describing the 6.00 wordgame: This game is a lot like Scrabble or Text Twist, if you've played those. Letters are dealt to players, who then construct one or more words out of their letters. Each valid word receives a score, based on the length of the word and the letters in that word.
+</p>
+<p style = "color:#09a383">
+The rules of the game are as follows:
+</p>
+<h4><p style = "color:#afb42b">Dealing</p></h4>
+<ul>
+<li>A player is dealt a hand of n letters chosen at random (assume n=7 for now).</li>
+<li>The player arranges the hand into as many words as they want out of the letters, but using each letter at most once.</li>
+<li>Some letters may remain unused (these won't be scored).</li>
+</ul>
+<h4><p style = "color:#afb42b">Scoring</p></h4>
+<ul>
+<li>
+<p>The score for the hand is the sum of the score for the words times the length of the word.</p>
+</li>
+<li>
+<p>The score for a word is the sum of the points for letters in the word, multiplied by the length of the word, plus 50 points if all n letters are used on the first go.</p>
+</li>
+<li>
+<p>Letters are scored as in Scrabble; A is worth 1, B is worth 3, C is worth 3, D is<br>
+worth 2, E is worth 1, and so on. We have defined the dictionary</p>
+<p><code>SCRABBLE_LETTER_VALUES</code></p>
+<p>that maps each lowercase letter to its Scrabble letter value.</p>
+</li>
+<li>
+<p>For example, ‘weed’ would be worth 32 points ((4+1+1+2)<em>4=32), as long as the hand actually has 1 ‘w’, 2 ‘e’s, and 1 ‘d’</em></p>
+</li>
+<li>
+<p>*As another example, if n=7 and you get ‘waybill’ on the first go, it would be worth 155 points ((4+1+4+3+1+1+1)*7=105, +50) for the bonus of using all<br>
+seven letters).</p>
+</li>
+</ul>
+<h3><p style = "color:#e65100">Problems</p></h3>
+<p>This problem ser is divided by two parts, <code>Part A</code> and <code>Part B</code>.</p>
+<p><code>Part A</code> includes problems from 1 to 5, while <code>Part B</code> includes that from 6-a to 6-c. Have a good time with the problems.</p>
+<p style = "color:#09a383">IF YOU NEED THE PROBLEM SET, YOU CAN GO TO MIT OCW, AND SEARCH 6001.</p>
+<p style = "color:#09a383">OR YOU CAN CONTACT ME BY EAMIL: abdeeglr@163.com</p>
+<h2><p style = "color:#fb8c00">Solution</p></h2
+<pre><code class="language-python"># 6.00 Problem Set 3A Solutions
+#
+# The 6.00 Word Game
+# Finished by: ABdeeglr
+
+
+import random
+import string
+
+
+VOWELS = 'aeiou'
+CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
+WORDLIST_FILENAME = &quot;words.txt&quot;
+
+
+Global_Const_letters_to_value = {
+    'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1,
+    'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8,
+    'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1,
+    'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1,
+    'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
+}
+
+
+# ___________________________________
+#     initialize settings
+#     create a word list reposities
+#     generate a random hand
+# ____________________________________
+
+
+def load_words():
+    &quot;&quot;&quot;
+    Returns a list of valid words. Words are strings of lowercase letters.
+    
+    Depending on the size of the word list, this function may
+    take a while to finish.
+    &quot;&quot;&quot;
+    with open(WORDLIST_FILENAME) as inFile:
+        wordlist = []
+        while True:
+            line = inFile.readline()
+            if not line:
+                break
+            else:
+                wordlist.append(line.strip().lower())
+    return wordlist
+
+
+def deal_hand(n):
+    &quot;Generate a new hand&quot;
+
+    num_vowel = int(n / 3)
+    num_const = n - num_vowel
+    hand = {}
+    
+    for _i in range(num_vowel):
+        x = VOWELS[random.randrange(len(VOWELS))]
+        if x not in hand:
+            hand[x] = 1
+        else:
+            hand[x] += 1
+    
+    for _j in range(num_const):
+        x = CONSONANTS[random.randrange(len(CONSONANTS))]
+        if x not in hand:
+            hand[x] = 1
+        else:
+            hand[x] += 1
+    
+    return hand
+
+
+def initialize_settings():
+    &quot;&quot;&quot;
+    According this function to get the texts and a hand
+    &quot;&quot;&quot;
+    hand_size = random.randint(6,15)
+    wordlist = load_words()
+    hand = deal_hand(hand_size)
+
+    return wordlist, hand
+# ___________________________________
+#     beginning of the main funcition
+#     include:
+#         get_word_score()
+#         get_frequency_dict()
+#         display_hand()
+#         update_hand()
+#         is_word_in_hand()
+#         is_valid_word()
+# ____________________________________
+
+
+def get_word_score(word):
+    # calculate the score of a word, but still not the ture score of a hand
+    if not word:
+        return 0
+    else:
+        usingword = word.lower()
+        sum = 0
+        for letter in usingword:
+            sum += Global_Const_letters_to_value[letter]
+        
+        return sum * len(usingword)
+
+
+def get_frequency_dict(word):
+    &quot;Convert the word to a dict object&quot;
+
+    dic = {}
+    for letter in word:
+        if letter not in dic:
+            dic[letter] = 1
+        else:
+            dic[letter] += 1
+    
+    return dic
+
+
+def display_hand(hand):
+    &quot;display a hand in a user-friendly way&quot;
+    for letter in hand.keys():
+        for _i in range(hand[letter]):
+            print(letter, end=&quot; &quot;)
+    print()
+
+
+def update_hand(word, hand):
+    for letter in word:
+        hand[letter] -= 1
+        if hand[letter] == 0:
+            del hand[letter]
+    return hand
+
+
+def is_word_in_hand(word, hand):
+    for letter in word:
+        if letter in hand.keys():
+            pass
+        else:
+            return False
+    return True
+
+def is_valid_word(word, hand, word_list):
+    if word in word_list:
+        if is_word_in_hand(word, hand):
+            word = get_frequency_dict(word)
+            for key in word.keys():
+                if word[key] &gt; hand[key]:
+                    return False
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+# main game construction
+def main():
+    print(&quot;Welcome to my game! Welcome!&quot;)
+    print(&quot;Now is loading the file...&quot;)
+    wordlist, usinghand = initialize_settings()
+    print(f&quot;{len(wordlist)} words loaded.&quot;)
+    print(&quot;Game start!&quot;)
+    print()
+    print(&quot;__________________________&quot;)
+    
+    play_hand(usinghand, wordlist)
+    while True:
+        print(&quot;&quot;&quot;
+              Do you want to play it again?
+              enter 'n' to play a *new* hand.
+              enter 'r' to play the last hand again.
+              enter 'e' to quit the game
+              &quot;&quot;&quot;)
+
+        ans = input(&quot;&gt;&gt;&quot;)
+        if ans == 'n':
+            wordlist, usinghand = initialize_settings()
+            play_hand(usinghand, wordlist)
+        elif ans == 'r':
+            play_hand(usinghand, wordlist)
+        elif ans == 'e':
+            break
+        else:
+            print(&quot;我放弃！自毁程序启动！&quot;)
+            for i in range(51):
+                print(f&quot;自毁程序启动中！{50 - i}&quot;)
+    
+
+def play_hand(hand, word_list):
+    &quot;Allow the users to play the given hand, as follows:&quot;
+    score = 0
+    total = 0
+    player_round = 1
+    while True:
+        print(&quot;Current hand:  &quot;, end=&quot;&quot;)
+        display_hand(hand)
+        answer = input('Enter word, or a &quot;.&quot; to indicate that you are finished:')
+        print()
+        if answer == &quot;.&quot;:
+            print(f&quot;Total score: {total}&quot;)
+            break
+        elif is_valid_word(answer, hand, word_list):
+            score = get_word_score(answer)
+            if get_frequency_dict(answer) == hand and player_round == 1:
+                score += 50
+            total += score
+            print(f&quot;{answer} earned {score} points. Total: {total} points&quot;)
+            hand = update_hand(answer, hand)
+            player_round += 1
+        else:
+            print(&quot;Invalid word, Please try agian.&quot;)
+            player_round += 1
+        
+
+        if not hand:
+            break
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[CS学习笔记(2)]MIT6001  Lecture 2 : Handout]]></title>
         <id>https://wind-uncovered.github.io/post/cs-xue-xi-bi-ji-2mit6001-lecture-2-handou/</id>
@@ -51,8 +576,122 @@
 <p>Variable is a way to name an object</p>
 </li>
 </ul>
-<h2><p style = "color:#fb8c00">Problem Set</p></h2>
+<h2><p style = "color:#fb8c00">Problem Set #2 
+    </br> Successive Approximation and a Wordgame</p></h2>
+<h3><p style = "color:#e65100">Introduction:</p></h3>
+<p style = "color:#09a383">Successive approximation is a problem-solving method where you try to guess the right answer to a problem and then check your guess. If the guess is good enough, you're done. Otherwise, you keep improving your guess in small increments and checking it, getting closer and closer to the right answer, until you determine that the guess is good enough. For the first 3 problems of this problem set, we will look at Newton's method, which uses successive approximation to find the roots of a function.
+</p>
+<p style = "color:#0277bd">逐次逼近是一种解决问题的方法，在此方法中，您尝试猜测问题的正确答案，然后检查您的猜测。 如果猜测足够好，那么您就完成了。 否则，您将不断以较小的增量改进猜测并进行检查，越来越接近正确的答案，直到您确定猜测足够好为止。 对于前三个问题
+    在这个问题集上，我们将看一下牛顿的方法，该方法使用逐次逼近法来找到函数的根。</p>
+<p style = "color:#09a383">
+Secondly, we will have some fun with Python, and get some practice using strings and string operations. We would like you to implement the word game hangman as a 1-player game against the computer.
+</p>
+<p style = "color:#0277bd">其次，我们将对Python有所了解，并获得一些使用字符串和字符串操作的练习。 我们希望您将单词游戏hangman实施为针对计算机的1人游戏。</p>
+<h3><p style = "color:#e65100">Polynomials</p></h3>
+<figure data-type="image" tabindex="1"><img src="https://wind-uncovered.github.io/post-images/1586316338658.png" alt="" loading="lazy"></figure>
+<h3><p style = "color:#e65100">Newton's Method</p></h3>
+<figure data-type="image" tabindex="2"><img src="https://wind-uncovered.github.io/post-images/1586316354590.png" alt="" loading="lazy"></figure>
+<h3><p style = "color:#e65100">Problem 1 : evaluate_poly function(多项式函数) </p></h3>
+<p>Implement the evaluate_poly function. This function evaluates a polynomial function for the given x value. It takes in a tuple of numbers poly and a number x. By number, we mean that x and each element of poly is a float. evaluate_poly takes the polynomial represented by poly and computes its value at x. It returns this value as a float.</p>
+<figure data-type="image" tabindex="3"><img src="https://wind-uncovered.github.io/post-images/1586316363158.png" alt="" loading="lazy"></figure>
+<h3><p style = "color:#e65100">Problem 2 : compute_deriv function(求导函数)</p></h3>
+<p>Implement the compute_deriv function. This function computes the derivative of a polynomial function. It takes in a tuple of numbers poly and returns the derivative, which is also a polynomial represented by a tuple.</p>
+<figure data-type="image" tabindex="4"><img src="https://wind-uncovered.github.io/post-images/1586316368682.png" alt="" loading="lazy"></figure>
+<h3><p style = "color:#e65100">Problem 3 : Implementing Newton's Method</p></h3>
+<p>Implement the compute_root function. This function applies Newton's method of successive approximation as described above to find a root of the polynomial function. It takes in a tuple of numbers poly, an initial guess x_0, and an error bound epsilon. It returns a tuple. The first element is the root of the polynomial represented by poly; the second element is the number of<br>
+iterations it took to get to that root.</p>
+<p>The function starts at x_0. It then applies Newton's method. It ends when it finds a root x such that the absolute value of f(x) is less than epsilon, i.e. f(x) is close enough to zero. It returns the root it found as a float.</p>
+<h3><p style = "color:#e65100">Problem 4 : Hangman</p></h3>
 <h2><p style = "color:#fb8c00">Solution</p></h2>
+<pre><code class="language-python"># 6.00 Problem Set 2
+#
+# newton method
+
+def evaluate_poly(poly, x):
+	&quot;&quot;&quot;
+    Computes the value of a polynomial function at given value x. Returns that value.
+
+    Example:
+    &gt;&gt;&gt; poly = [0.0, 0.0, 5.0, 9.3, 7.0]    # f(x) = 5x^2 + 9.3x^3 + 7x^4 
+    &gt;&gt;&gt; x = -13
+    &gt;&gt;&gt; print evaluate_poly(poly, x)  # f(-13) = 5(-13)^2 + 9.3(-13)^3 + 7(-13)^4 
+    180339.9
+
+    poly: list of numbers, length &gt; 0
+    x: number
+    returns: float
+    &quot;&quot;&quot;
+	result = 0
+	length = len(poly)
+
+	for i in range(0, length):
+		result += x**i*poly[i]
+
+	return result
+
+
+
+def compute_derivate(poly):
+	&quot;&quot;&quot;
+    Computes and returns the derivative of a polynomial function. If the
+    derivative is 0, returns [0.0].
+
+    Example:
+    &gt;&gt;&gt; poly = [-13.39, 0.0, 17.5, 3.0, 1.0]    # - 13.39 + 17.5x^2 + 3x^3 + x^4
+    &gt;&gt;&gt; print compute_deriv(poly)        # 35^x + 9x^2 + 4x^3
+    [0.0, 35.0, 9.0, 4.0]
+
+    poly: list of numbers, length &gt; 0
+    returns: list of numbers
+    &quot;&quot;&quot;
+	length = len(poly)
+
+	poly_new = [i*poly[i] for i in range(0,length)]
+	poly_new.pop(0)
+
+	return poly_new
+
+# if __name__==&quot;__main__&quot;:
+# 	poly = [1, 2, 3, 4]
+# 	print(compute_derivate(poly))
+
+
+
+def newton_root(poly, epsilon):
+    &quot;&quot;&quot;
+    
+    Uses Newton's method to find and return a root of a polynomial function.
+    Returns a list containing the root and the number of iterations required
+    to get to the root.
+
+    Example:
+    &gt;&gt;&gt; poly = [-13.39, 0.0, 17.5, 3.0, 1.0]    # - 13.39 + 17.5x^2 + 3x^3 + x^4
+    &gt;&gt;&gt; x_0 = 0.1
+    &gt;&gt;&gt; epsilon = .0001
+    &gt;&gt;&gt; print compute_root(poly, x_0, epsilon)
+    [0.80679075379635201, 8]
+
+    poly: list of numbers, length &gt; 1.
+         Represents a polynomialfunction containing at least one real root.
+         The derivative of this polynomial function at x_0 is not 0.
+    x_0: float
+    epsilon: float &gt; 0
+    returns: list [float, int]
+    &quot;&quot;&quot;
+	root = poly[-1] / poly[0]
+	counter = 1
+
+	while abs(evaluate_poly(poly, root)) &gt;= epsilon:
+		root = (root - evaluate_poly(poly, root) 
+				/ evaluate_poly(compute_derivate(poly), root))
+		counter += 1
+
+	return [root,counter]
+
+# if __name__==&quot;__main__&quot;:
+# 	gx = [1, 2, 1]
+# 	print(newton_root(gx, 0.001))
+</code></pre>
 ]]></content>
     </entry>
     <entry>
